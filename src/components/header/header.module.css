@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 1rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.bestScore {
+    display: flex;
+    gap: 0.5ch;
+    font-weight: 200;
+}

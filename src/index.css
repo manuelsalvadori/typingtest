@@ -1,16 +1,35 @@
+@font-face {
+    font-family: Sora;
+    src: url(./assets/fonts/Sora/Sora-VariableFont_wght.ttf) format("truetype");
+}
+
 :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --bg-color: #282c34;
+    --button-color: hsl(220, 13%, 13%);
+    --text-color: #fffffff0;
+    --correct-color: hsl(140, 63%, 57%);
+    --incorrect-color: hsl(354, 63%, 57%);
+
+    font-family: Sora, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
     color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    color: var(--text-color);
+    background-color: var(--bg-color);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    width: 100%;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 a {
@@ -27,6 +46,7 @@ body {
     display: flex;
     min-width: 320px;
     min-height: 100vh;
+    justify-content: center;
 }
 
 h1 {

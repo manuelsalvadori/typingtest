@@ -1,18 +1,15 @@
 .body {
     position: relative;
-    font-family: "Courier New", Courier, monospace;
     font-size: 1.2em;
     line-height: 1.5;
-    color: #333;
-    background-color: hsl(0, 0%, 7%);
 }
 
 .correct {
-    color: hsl(120, 100%, 25%);
+    color: var(--correct-color);
 }
 
 .incorrect {
-    color: hsl(0, 100%, 50%);
+    color: var(--incorrect-color);
     text-decoration: underline;
 }
 

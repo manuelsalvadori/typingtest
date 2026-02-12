@@ -7,6 +7,7 @@ import useLatest from "../../hooks/useLatest";
 import useTypingTimer from "../../hooks/useTypingTimer";
 import data from "../../data/data.json";
 import Results from "../results/Results";
+import resetIcon from "@assets/images/icon-restart.svg";
 
 type Stats = {
     errors: number;
@@ -95,24 +96,24 @@ export default function TypingSession({
 
     return (
         <>
-            <menu>
-                <Controls
-                    difficulty={difficulty}
-                    setDifficulty={setDifficulty}
-                    mode={mode}
-                    setMode={setMode}
-                    time={time}
-                    accuracy={accuracy}
-                    wpm={wpm}
-                    timedMaxTime={maxTime}
-                />
-            </menu>
+            <Controls
+                difficulty={difficulty}
+                setDifficulty={setDifficulty}
+                mode={mode}
+                setMode={setMode}
+                time={time}
+                accuracy={accuracy}
+                wpm={wpm}
+                timedMaxTime={maxTime}
+            />
             <main className={styles.main}>
                 <TypingArea text={text} typedText={typedText} handleKeyDown={handleKeyDown} />
                 {status === "idle" ? (
                     <div className={styles.overlay} onClick={() => setStatus("active")}></div>
                 ) : (
-                    <button onClick={onReset}>Reset</button>
+                    <button onClick={onReset}>
+                        Restart <img src={resetIcon} alt="Reset" />
+                    </button>
                 )}
             </main>
         </>

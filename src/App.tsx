@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import type { Difficulty, Mode } from "./utilities/utils";
 import TypingSession from "./components/typingSession/TypingSession";
+import Header from "./components/header/Header";
 
 const TIMED_MAX_TIME = 60;
 
@@ -16,9 +17,7 @@ function App() {
 
     return (
         <div className={styles.root}>
-            <header>
-                <h1>Typing Speed Test</h1>
-            </header>
+            <Header />
             <TypingSession
                 key={`${resetKey}-${difficulty}-${mode}`} // Force remount on reset, difficulty or mode change
                 difficulty={difficulty}
