@@ -1,0 +1,14 @@
+.main {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(1px);
+    cursor: pointer;
+}

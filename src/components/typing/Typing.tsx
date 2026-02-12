@@ -7,7 +7,7 @@ type TypingProps = {
     handleKeyDown: (event: KeyboardEvent) => void;
 };
 
-export default function Typing({ text, typedText, handleKeyDown }: TypingProps) {
+export default function TypingArea({ text, typedText, handleKeyDown }: TypingProps) {
     useEffect(() => {
         const controller = new AbortController();
         document.addEventListener("keydown", (event) => handleKeyDown(event), {
@@ -17,7 +17,7 @@ export default function Typing({ text, typedText, handleKeyDown }: TypingProps) 
         return () => {
             controller.abort();
         };
-    }, []);
+    }, [handleKeyDown]);
 
     const handleStyle = (index: number) => {
         if (index === typedText.length) {
