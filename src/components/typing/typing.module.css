@@ -1,0 +1,24 @@
+.body {
+    position: relative;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #333;
+    background-color: hsl(0, 0%, 7%);
+}
+
+.correct {
+    color: hsl(120, 100%, 25%);
+}
+
+.incorrect {
+    color: hsl(0, 100%, 50%);
+    text-decoration: underline;
+}
+
+.cursor {
+    background-color: hsl(240, 1%, 59%);
+    border-radius: 1px;
+    inset: 0;
+    padding: 0;
+}
