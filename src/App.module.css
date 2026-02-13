@@ -1,10 +1,16 @@
 .root {
     max-width: 1280px;
     width: 100%;
+    min-height: 100%;
     margin-block: 0;
     margin-inline: auto;
     padding: 2rem;
-    text-align: center;
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .root {
+        padding: 1rem;
+    }
 }

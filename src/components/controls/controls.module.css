@@ -2,10 +2,17 @@
     border-bottom: 1px solid hsla(0, 0%, 85%, 0.3);
     padding-top: 1rem;
     padding-inline: 0;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1ch;
     margin: 0;
     display: flex;
     justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .body {
+        flex-direction: column;
+        gap: 1ch;
+    }
 }
 
 .stats {
@@ -14,9 +21,35 @@
     gap: 1ch;
 }
 
-.stats div:not(:first-child) {
+@media (max-width: 768px) {
+    .stats {
+        text-align: center;
+    }
+
+    .stats div {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .controls div {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+}
+
+.stats div:not(:first-child),
+.controls div:not(:first-child) {
     border-left: 1px solid hsl(0, 0%, 85%);
     padding-inline-start: 1ch;
+}
+
+@media (max-width: 768px) {
+    .controls div:not(:first-child) {
+        border-left: none;
+        padding-inline-start: 0;
+    }
 }
 
 .bold {
@@ -45,9 +78,9 @@ select {
 }
 select:focus,
 select:hover {
-    border-color: #646cff;
+    border-color: var(--active-color);
     outline: none;
-    color: #646cff;
+    color: var(--active-color);
 }
 
 select option {

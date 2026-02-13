@@ -90,6 +90,7 @@ export default function TypingSession({
                     correct: stats.total - stats.errors,
                     incorrect: stats.errors,
                 }}
+                onReset={onReset}
             />
         );
     }
@@ -109,7 +110,10 @@ export default function TypingSession({
             <main className={styles.main}>
                 <TypingArea text={text} typedText={typedText} handleKeyDown={handleKeyDown} />
                 {status === "idle" ? (
-                    <div className={styles.overlay} onClick={() => setStatus("active")}></div>
+                    <div className={styles.overlay} onClick={() => setStatus("active")}>
+                        <button onClick={undefined}>Start</button>
+                        <p>Or click the text to start typing</p>
+                    </div>
                 ) : (
                     <button onClick={onReset}>
                         Restart <img src={resetIcon} alt="Reset" />

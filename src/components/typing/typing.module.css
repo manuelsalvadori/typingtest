@@ -2,6 +2,9 @@
     position: relative;
     font-size: 1.2em;
     line-height: 1.5;
+    text-align: start;
+    font-size: 2rem;
+    font-weight: 300;
 }
 
 .correct {
@@ -14,8 +17,14 @@
 }
 
 .cursor {
-    background-color: hsl(240, 1%, 59%);
+    background-color: hsla(240, 3%, 59%, 0.8);
     border-radius: 1px;
     inset: 0;
     padding: 0;
+}
+
+@media (max-width: 768px) {
+    .body {
+        font-size: 1.25rem;
+    }
 }

@@ -1,5 +1,5 @@
 .main {
-    margin-top: 1rem;
+    margin-top: 3rem;
     display: flex;
     position: relative;
     flex-direction: column;
@@ -9,6 +9,10 @@
 
 .overlay {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     inset: 0;
     backdrop-filter: blur(2px);
     cursor: pointer;

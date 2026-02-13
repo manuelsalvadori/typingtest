@@ -6,6 +6,7 @@
 :root {
     --bg-color: #282c34;
     --button-color: hsl(220, 13%, 13%);
+    --active-color: hsl(220, 44%, 46%);
     --text-color: #fffffff0;
     --correct-color: hsl(140, 63%, 57%);
     --incorrect-color: hsl(354, 63%, 57%);
@@ -66,7 +67,7 @@ button {
     transition: border-color 0.25s;
 }
 button:hover {
-    border-color: #646cff;
+    background-color: var(--active-color);
 }
 button:focus,
 button:focus-visible {

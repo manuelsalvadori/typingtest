@@ -1,3 +1,4 @@
+import { useMediaQuery } from "react-responsive";
 import type { Difficulty, Mode } from "../../utilities/utils";
 import styles from "./controls.module.css";
 
@@ -23,23 +24,25 @@ export default function Controls({
     timedMaxTime = 60,
 }: ControlsProps) {
     const formattedTime = mode === "timed" ? (timedMaxTime - time).toFixed(1) : time.toFixed(1);
+    const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
 
     return (
         <menu className={styles.body}>
             <div className={styles.stats}>
                 <div>
-                    WPM: <span className={styles.bold}>{Math.round(wpm)}</span>
+                    <span>WPM:</span> <span className={styles.bold}>{Math.round(wpm)}</span>
                 </div>
                 <div>
-                    Accuracy: <span className={styles.bold}>{accuracy.toFixed(0)}%</span>
+                    <span>Accuracy:</span>{" "}
+                    <span className={styles.bold}>{accuracy.toFixed(0)}%</span>
                 </div>
                 <div>
-                    Time: <span className={styles.bold}>{formattedTime}s</span>
+                    <span>Time:</span> <span className={styles.bold}>{formattedTime}s</span>
                 </div>
             </div>
             <div className={styles.controls}>
                 <div className={styles.options}>
-                    <label htmlFor="difficulty">Difficulty:</label>
+                    {isDesktop && <label htmlFor="difficulty">Difficulty:</label>}
                     <select
                         id="difficulty"
                         value={difficulty}
@@ -50,7 +53,7 @@ export default function Controls({
                     </select>
                 </div>
                 <div className={styles.options}>
-                    <label htmlFor="mode">Mode:</label>
+                    {isDesktop && <label htmlFor="mode">Mode:</label>}
                     <select
                         id="mode"
                         value={mode}
