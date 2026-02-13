@@ -1,23 +1,23 @@
-import { useEffect } from "react";
 import styles from "./typing.module.css";
 
 type TypingProps = {
     text: string;
     typedText: string;
-    handleKeyDown: (event: KeyboardEvent) => void;
+    handleKeyDown: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    inputRef: React.RefObject<HTMLInputElement | null>;
 };
 
-export default function TypingArea({ text, typedText, handleKeyDown }: TypingProps) {
-    useEffect(() => {
-        const controller = new AbortController();
-        document.addEventListener("keydown", (event) => handleKeyDown(event), {
-            signal: controller.signal,
-        });
+export default function TypingArea({ text, typedText, handleKeyDown, inputRef }: TypingProps) {
+    // useEffect(() => {
+    //     const controller = new AbortController();
+    //     document.addEventListener("keydown", (event) => handleKeyDown(event), {
+    //         signal: controller.signal,
+    //     });
 
-        return () => {
-            controller.abort();
-        };
-    }, [handleKeyDown]);
+    //     return () => {
+    //         controller.abort();
+    //     };
+    // }, [handleKeyDown]);
 
     const handleStyle = (index: number) => {
         if (index === typedText.length) {
@@ -35,6 +35,17 @@ export default function TypingArea({ text, typedText, handleKeyDown }: TypingPro
 
     return (
         <div className={styles.body}>
+            <input
+                ref={inputRef}
+                type="text"
+                className={styles.hiddenInput}
+                autoCapitalize="none"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                inputMode="text"
+                onChange={handleKeyDown}
+            />
             <p>
                 {Array.from(text).map((char, index) => (
                     <span key={index} className={handleStyle(index)}>

@@ -28,3 +28,12 @@
         font-size: 1.25rem;
     }
 }
+
+.hiddenInput {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    /* Importante per iOS: evita che la pagina faccia zoom al focus */
+    font-size: 16px;
+}

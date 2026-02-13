@@ -1,7 +1,7 @@
 import Controls from "../controls/Controls";
 import TypingArea from "../typing/Typing";
 import styles from "./typingSession.module.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Difficulty, Mode, Status } from "../../utilities/utils";
 import useLatest from "../../hooks/useLatest";
 import useTypingTimer from "../../hooks/useTypingTimer";
@@ -47,35 +47,43 @@ export default function TypingSession({
                 return;
             }
             if (status === "idle" && (event.key === "Enter" || event.key.length === 1))
-                setStatus("active");
+                startSession();
         };
         document.addEventListener("keydown", handleGlobalKeydown);
         return () => document.removeEventListener("keydown", handleGlobalKeydown);
     }, [status]);
 
     const handleKeyDown = useCallback(
-        (event: KeyboardEvent) => {
+        (event: React.ChangeEvent<HTMLInputElement>) => {
             if (status !== "active") return;
 
-            if (event.key === "Backspace") {
-                setTypedText((prev) => prev.slice(0, -1));
-                return;
-            }
+            const val = event.target.value;
+            const lastChar = val.slice(-1);
 
-            if (event.key.length !== 1) return;
+            // if (val.length < typedTextRef.current.length) {
+            //     setTypedText((prev) => prev.slice(0, -1));
+            //     return;
+            // }
 
             const currentLength = typedTextRef.current.length;
             if (currentLength >= text.length) return;
 
-            const error = event.key !== text[currentLength] ? 1 : 0;
+            const error = lastChar !== text[currentLength] ? 1 : 0;
 
             setStats((prev) => ({ errors: prev.errors + error, total: prev.total + 1 }));
-            setTypedText((prev) => prev + event.key);
+            setTypedText(val);
 
             if (currentLength + 1 === text.length) setStatus("finished");
         },
         [text, status],
     );
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const startSession = () => {
+        inputRef.current?.focus();
+        setStatus("active");
+    };
 
     const accuracy =
         stats.total === 0 ? 100 : Math.max(0, ((stats.total - stats.errors) / stats.total) * 100);
@@ -108,9 +116,14 @@ export default function TypingSession({
                 timedMaxTime={maxTime}
             />
             <main className={styles.main}>
-                <TypingArea text={text} typedText={typedText} handleKeyDown={handleKeyDown} />
+                <TypingArea
+                    text={text}
+                    typedText={typedText}
+                    handleKeyDown={handleKeyDown}
+                    inputRef={inputRef}
+                />
                 {status === "idle" ? (
-                    <div className={styles.overlay} onClick={() => setStatus("active")}>
+                    <div className={styles.overlay} onClick={startSession}>
                         <button onClick={undefined}>Start</button>
                         <p>Or click the text to start typing</p>
                     </div>
