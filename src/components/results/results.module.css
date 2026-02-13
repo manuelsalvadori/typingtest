@@ -66,6 +66,7 @@
 .stars img:first-child {
     transform: translate(0, -10rem);
 }
+
 .stars img:not(:first-child) {
     transform: translate(0, 10rem);
 }
