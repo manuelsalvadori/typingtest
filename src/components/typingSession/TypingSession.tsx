@@ -9,9 +9,10 @@ import data from "../../data/data.json";
 import Results from "../results/Results";
 import resetIcon from "@assets/images/icon-restart.svg";
 
-type Stats = {
+export type Stats = {
     errors: number;
     total: number;
+    uncorrectedErrors: number;
 };
 
 export type TypingSessionProps = {
@@ -33,7 +34,7 @@ export default function TypingSession({
 }: TypingSessionProps) {
     const [status, setStatus] = useState<Status>("idle");
     const [text] = useState(getRandomText(difficulty));
-    const [stats, setStats] = useState<Stats>({ errors: 0, total: 0 });
+    const [stats, setStats] = useState<Stats>({ errors: 0, total: 0, uncorrectedErrors: 0 });
     const [typedText, setTypedText] = useState("");
 
     const typedTextRef = useLatest(typedText);
@@ -60,18 +61,31 @@ export default function TypingSession({
             const val = event.target.value;
             const lastChar = val.slice(-1);
 
-            // if (val.length < typedTextRef.current.length) {
-            //     setTypedText((prev) => prev.slice(0, -1));
-            //     return;
-            // }
-
             const currentLength = typedTextRef.current.length;
             if (currentLength >= text.length) return;
 
+            if (val.length < typedTextRef.current.length) {
+                if (
+                    typedTextRef.current[typedTextRef.current.length - 1] !==
+                    text[typedTextRef.current.length - 1]
+                ) {
+                    setStats((prev) => ({
+                        ...prev,
+                        uncorrectedErrors: prev.uncorrectedErrors - 1,
+                    }));
+                }
+                setTypedText(val);
+                return;
+            }
+
             const error = lastChar !== text[currentLength] ? 1 : 0;
 
-            setStats((prev) => ({ errors: prev.errors + error, total: prev.total + 1 }));
             setTypedText(val);
+            setStats((prev) => ({
+                errors: prev.errors + error,
+                total: prev.total + 1,
+                uncorrectedErrors: prev.uncorrectedErrors + error,
+            }));
 
             if (currentLength + 1 === text.length) setStatus("finished");
         },
@@ -88,16 +102,18 @@ export default function TypingSession({
     const accuracy =
         stats.total === 0 ? 100 : Math.max(0, ((stats.total - stats.errors) / stats.total) * 100);
     const wpm = time === 0 ? 0 : typedText.length / 5 / (time / 60);
+    const netwpm =
+        time === 0
+            ? 0
+            : Math.max(0, (typedText.length / 5 - stats.uncorrectedErrors) / (time / 60));
 
     if (status === "finished") {
         return (
             <Results
                 wpm={wpm}
+                netwpm={netwpm}
                 accuracy={accuracy}
-                characterStats={{
-                    correct: stats.total - stats.errors,
-                    incorrect: stats.errors,
-                }}
+                characterStats={stats}
                 onReset={onReset}
             />
         );
@@ -113,6 +129,7 @@ export default function TypingSession({
                 time={time}
                 accuracy={accuracy}
                 wpm={wpm}
+                netwpm={netwpm}
                 timedMaxTime={maxTime}
             />
             <main className={styles.main}>
@@ -132,6 +149,7 @@ export default function TypingSession({
                         Restart <img src={resetIcon} alt="Reset" />
                     </button>
                 )}
+                Errors: {stats.errors} Total: {stats.total} Uncorrected: {stats.uncorrectedErrors}
             </main>
         </>
     );

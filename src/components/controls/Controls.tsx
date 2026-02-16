@@ -10,6 +10,7 @@ export type ControlsProps = {
     time: number;
     accuracy: number;
     wpm: number;
+    netwpm: number;
     timedMaxTime?: number;
 };
 
@@ -21,6 +22,7 @@ export default function Controls({
     time,
     accuracy,
     wpm,
+    netwpm,
     timedMaxTime = 60,
 }: ControlsProps) {
     const formattedTime = mode === "timed" ? (timedMaxTime - time).toFixed(1) : time.toFixed(1);
@@ -31,6 +33,9 @@ export default function Controls({
             <div className={styles.stats}>
                 <div>
                     <span>WPM:</span> <span className={styles.bold}>{Math.round(wpm)}</span>
+                </div>
+                <div>
+                    <span>Net WPM:</span> <span className={styles.bold}>{Math.round(netwpm)}</span>
                 </div>
                 <div>
                     <span>Accuracy:</span>{" "}

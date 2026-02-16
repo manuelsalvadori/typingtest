@@ -30,7 +30,8 @@
 @media (max-width: 768px) {
     .cards {
         width: 100%;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, 13rem);
+        justify-content: center;
     }
 }
 

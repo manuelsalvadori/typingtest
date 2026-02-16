@@ -8,15 +8,17 @@ import resetIcon from "@assets/images/icon-restart.svg";
 import confetti from "@assets/images/pattern-confetti.svg";
 import star1 from "@assets/images/pattern-star-1.svg";
 import star2 from "@assets/images/pattern-star-2.svg";
+import type { Stats } from "../typingSession/TypingSession";
 
 export type ResultsProps = {
     wpm: number;
+    netwpm: number;
     accuracy: number;
-    characterStats: { correct: number; incorrect: number };
+    characterStats: Stats;
     onReset: () => void;
 };
 
-export default function Results({ wpm, accuracy, characterStats, onReset }: ResultsProps) {
+export default function Results({ wpm, netwpm, accuracy, characterStats, onReset }: ResultsProps) {
     const [bestScore, setBestScore] = useAtom(bestScoreAtom);
     const oldBest = useRef(bestScore);
 
@@ -50,10 +52,13 @@ export default function Results({ wpm, accuracy, characterStats, onReset }: Resu
             </div>
             <div className={styles.cards}>
                 <ResultCard label="WPM:" value={Math.round(wpm).toString()} />
+                <ResultCard label="Net WPM:" value={Math.round(netwpm).toString()} />
                 <ResultCard label="Accuracy:" value={`${accuracy.toFixed(2)}%`} />
+                <ResultCard label="Total Characters:" value={`${characterStats.total}`} />
+                <ResultCard label="Total Errors:" value={`${characterStats.errors}`} />
                 <ResultCard
-                    label="Characters:"
-                    value={`${characterStats.correct}/${characterStats.incorrect}`}
+                    label="Corrected Errors:"
+                    value={`${characterStats.errors - characterStats.uncorrectedErrors}`}
                 />
             </div>
             <button onClick={onReset}>
